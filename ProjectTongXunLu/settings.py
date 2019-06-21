@@ -79,9 +79,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tel_data',
-        'USER': 'root',
-        'PASSWORD': 'wincewf',
-        'HOST': '127.0.0.1',
+        'USER': 'wcs',
+        'PASSWORD': '123123',
+        'HOST': '172.31.201.118',
+        #      'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
