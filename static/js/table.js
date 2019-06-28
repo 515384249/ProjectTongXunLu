@@ -4,7 +4,6 @@ $('#myModal').on('hidden.bs.modal', function () {
     $(this).removeData('bs.modal');
 })
 
-
 $(function () {
     let $table = $('#ArbetTable');
     let $button = $('#mybtn_add');
@@ -182,8 +181,6 @@ $(function () {
 
 
         $detbnt.click(function () {
-
-
             var myarray = new Array();
             myarray = JSON.stringify($table.bootstrapTable('getSelections'));
             // var csrfToken = $("input[name='csrfmiddlewaretoken']").val();
@@ -228,11 +225,98 @@ $(function () {
     }
 
 });
-// ---------------------
-// 作者：帝尊菜鸟
-// 来源：CSDN
-// 原文：https://blog.csdn.net/dizuncainiao/article/details/81742971
-// 版权声明：本文为博主原创文章，转载请附上博文链接！
+$(document).ready(function () {
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                var csrftoken = getCookie('csrftoken');
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    var $button = $('#mysearchbnt')
+    $('#mysearchbnt').click(function () {
+        let $table = $('#ArbetTable')
+        var s = $('#name').val()
+        console.log(s)
+        $.ajax({
+            type: "POST",
+            data: {
+                "search": s,
+            },
+            url: '/showtable/', //后台处理函数的url 这里用的是static url 需要与urls.py中的name一致
+            cache: false,
+            dataType: "json",
+            success: function (result) {
+                $('#ArbetTable').bootstrapTable({data: result})
+                // console.log(toString.call(result));
+                // console.log(result)
+                // var obj = eval("(" + result + ")");
+                // var rows = []
+                // for (var i = 0; i <10; i++) {
+                //      console.log( obj.length)
+                //     rows.push({
+                //         id: obj[i]["id"],
+                //         yuan: obj[i]["yuan"],
+                //         xi: obj[i]["xi"],
+                //         xingming: obj[i]["xingming"],
+                //         dianhua: obj[i]["dianhua"],
+                //         dizhi: obj[i]["dizhi"],
+                //
+                //     })
+                // }
+                // $('#ArbetTable').bootstrapTable('load', rows)
+
+            },
+            error: function () {
+                alert("false");
+            }
+        });
+        return false;
+    });
+
+
+});
+
+$(function () {
+    let $table = $('#ArbetTable2');
+    $table.bootstrapTable({
+        showToggle: true,
+        showColumns: true,
+        showPaginationSwitch: false,     //显示切换分页按钮
+        showRefresh: true,      //显示刷新按钮
+        sidePagination: "client",
+        queryParams: function (params) {//上传服务器的参数
+        var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
+            search: $('#data-search-text').val(),
+         };
+            return temp;
+        },
+    })
+
+
+});
 
 
 $(document).ready(function () {
@@ -277,29 +361,27 @@ $(document).ready(function () {
             },
             url: '/showtable/', //后台处理函数的url 这里用的是static url 需要与urls.py中的name一致
             cache: false,
-            dataType: "html",
+            dataType: "json",
             success: function (result) {
-                 console.log(toString.call(result));
-                // alert("chaxun");
-                // alert(result);
-                // $('#ArbetTable').bootstrapTable('load', result)
                 console.log(result)
-                var obj = eval("(" + result + ")");
-                var rows = []
-                for (var i = 0; i <10; i++) {
-                     console.log( obj.length)
-                    rows.push({
-                        id: obj[i]["id"],
-                        yuan: obj[i]["yuan"],
-                        xi: obj[i]["xi"],
-                        zhuanye: obj[i]["zhaunye"],
-                        xingming: obj[i]["xingming"],
-                        zhiwu: obj[i]["zhiwu"],
-                        dianhua: obj[i]["dianhua"],
-                        dizhi: obj[i]["dizhi"],
-                    })
-                }
-                $('#ArbetTable').bootstrapTable('load', rows)
+                $('#ArbetTable2').bootstrapTable({data:result})
+                // console.log(toString.call(result));
+                // console.log(result)
+                // var obj = eval("(" + result + ")");
+                // var rows = []
+                // for (var i = 0; i <10; i++) {
+                //      console.log( obj.length)
+                //     rows.push({
+                //         id: obj[i]["id"],
+                //         yuan: obj[i]["yuan"],
+                //         xi: obj[i]["xi"],
+                //         xingming: obj[i]["xingming"],
+                //         dianhua: obj[i]["dianhua"],
+                //         dizhi: obj[i]["dizhi"],
+                //
+                //     })
+                // }
+                // $('#ArbetTable').bootstrapTable('load', rows)
 
             },
             error: function () {
@@ -314,19 +396,19 @@ $(document).ready(function () {
 
 //
 
-function randomData(data) {
-    var rows = []
-    for (var i = 0; i < data.length; i++) {
-        rows.push({
-            id: data[i]["id"],
-            yuan: data[i]["id"],
-            xi: data[i]["xi"],
-            zhuanye: data[i]["zhaunye"],
-            xingming: data[i]["xingming"],
-            zhiwu: data[i]["zhiwu"],
-            dianhua: data[i]["dianhua"],
-            dizhi: data[i]["dizhi"],
-        })
-    }
-    return rows
-}
+// function randomData(data) {
+//     var rows = []
+//     for (var i = 0; i < data.length; i++) {
+//         rows.push({
+//             id: data[i]["id"],
+//             yuan: data[i]["id"],
+//             xi: data[i]["xi"],
+//             zhuanye: data[i]["zhaunye"],
+//             xingming: data[i]["xingming"],
+//             zhiwu: data[i]["zhiwu"],
+//             dianhua: data[i]["dianhua"],
+//             dizhi: data[i]["dizhi"],
+//         })
+//     }
+//     return rows
+// }

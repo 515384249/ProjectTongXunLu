@@ -32,7 +32,7 @@
         return '\u603B\u5171 ' + totalRows + ' \u6761\u8BB0\u5F55';
       },
       formatSearch: function formatSearch() {
-        return '搜索';
+        return '电话号码查询';
       },
       formatNoMatches: function formatNoMatches() {
         return '没有找到匹配的记录';

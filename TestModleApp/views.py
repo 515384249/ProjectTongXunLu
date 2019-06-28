@@ -124,12 +124,13 @@ def showtable(request):
                                                                 'dianhua',
                                                                 'dizhi')
         ppp = json.dumps(list(all_records))
+        print(ppp)
         return HttpResponse(ppp)
     else:
         return HttpResponse("eeee")
 
-@login_required
-@require_GET
+# @login_required
+# @require_GET
 def ceshi(request):
     context = {}
     return render(request, 'ceshi.html', context)
