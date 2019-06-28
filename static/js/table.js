@@ -116,7 +116,7 @@ $(function () {
             var myarray = new Array();
             myarray = JSON.stringify($table.bootstrapTable('getSelections'));
             // alert(myarray.length)
-            if( myarray.length < 3){
+            if (myarray.length < 3) {
                 alert("请选中一条记录，否则保存无效")
                 return;
             }
@@ -302,18 +302,27 @@ $(document).ready(function () {
 $(function () {
     let $table = $('#ArbetTable2');
     $table.bootstrapTable({
-        showToggle: true,
-        showColumns: true,
+        showToggle: false,
+        showColumns: false,
         showPaginationSwitch: false,     //显示切换分页按钮
         showRefresh: true,      //显示刷新按钮
         sidePagination: "client",
-        queryParams: function (params) {//上传服务器的参数
+        paginationDetailHAlign: 'right',
+        paginationHAlign: 'left',
+
+
+        queryParams
+:
+
+    function (params) {//上传服务器的参数
         var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
             search: $('#data-search-text').val(),
-         };
-            return temp;
-        },
-    })
+        };
+        return temp;
+    }
+
+,
+})
 
 
 });
@@ -361,28 +370,32 @@ $(document).ready(function () {
             },
             url: '/showtable/', //后台处理函数的url 这里用的是static url 需要与urls.py中的name一致
             cache: false,
-            dataType: "json",
+            dataType: "html",
             success: function (result) {
                 console.log(result)
-                $('#ArbetTable2').bootstrapTable({data:result})
-                // console.log(toString.call(result));
-                // console.log(result)
-                // var obj = eval("(" + result + ")");
-                // var rows = []
-                // for (var i = 0; i <10; i++) {
-                //      console.log( obj.length)
-                //     rows.push({
-                //         id: obj[i]["id"],
-                //         yuan: obj[i]["yuan"],
-                //         xi: obj[i]["xi"],
-                //         xingming: obj[i]["xingming"],
-                //         dianhua: obj[i]["dianhua"],
-                //         dizhi: obj[i]["dizhi"],
-                //
-                //     })
-                // }
-                // $('#ArbetTable').bootstrapTable('load', rows)
 
+                console.log(toString.call(result));
+                console.log(result)
+                var obj = eval("(" + result + ")");
+                var rows = []
+                if (obj.length < 1) {
+                    $('#ArbetTable2').bootstrapTable("removeAll")
+                } else {
+
+                    for (var i = 0; i < 10; i++) {
+                        console.log(obj.length)
+                        rows.push({
+                            id: obj[i]["id"],
+                            yuan: obj[i]["yuan"],
+                            xi: obj[i]["xi"],
+                            xingming: obj[i]["xingming"],
+                            dianhua: obj[i]["dianhua"],
+                            dizhi: obj[i]["dizhi"],
+                        })
+                    }
+
+                    $('#ArbetTable2').bootstrapTable('load', rows)
+                }
             },
             error: function () {
                 alert("false");
@@ -412,3 +425,7 @@ $(document).ready(function () {
 //     }
 //     return rows
 // }
+
+
+
+document.getElementsByClassName('pagination').style.marginLeft='0px'
