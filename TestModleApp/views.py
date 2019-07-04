@@ -12,7 +12,7 @@ from django.views.decorators.http import require_GET
 from django.db.models import Q
 from django.http import FileResponse
 from tools import excel
-
+from django.conf import settings
 
 # from django.views.decorators.csrf import csrf_exempt
 # @csrf_exempt
@@ -33,7 +33,7 @@ def fileupload(request):
         myFile = request.FILES.get("myfile", None)  # 获取上传的文件，如果没有文件，则默认为None
         if not myFile:
             return HttpResponse("no files for upload!")
-        destination = open(os.path.join("E:\\upload", myFile.name), 'wb+')  # 打开特定的文件进行二进制的写操作
+        destination = open(os.path.join(settings.MEDIA_ROOT, myFile.name), 'wb+')  # 打开特定的文件进行二进制的写操作
         for chunk in myFile.chunks():  # 分块写入文件
             destination.write(chunk)
         destination.close()
@@ -41,46 +41,83 @@ def fileupload(request):
         tablelist = []
         rows_list = []
         rows_list1 = []
-        tablelist = excel.get_tables(os.path.join("E:\\upload", myFile.name))
+        tablelist = excel.get_tables(os.path.join(settings.MEDIA_ROOT, myFile.name))
         # 获得所有电话
         cell = dict()
         cells = []
+        # for i in tablelist:
+        #     rows_list1 = excel.get_table_rows(i)
+        #     rows_list.extend(rows_list1)
+        #     for j in range(0, len(rows_list)):
+        #         if rows_list[j][0]:
+        #             cell["yuan"] = rows_list[j][0]
+        #         elif "yuan" in cell:
+        #             del cell["yuan"]
+        #         if rows_list[j][1]:
+        #             cell["xi"] = rows_list[j][1]
+        #         elif "xi" in cell:
+        #             del cell["xi"]
+        #         if rows_list[j][2]:
+        #             cell["zhuanye"] = rows_list[j][2]
+        #         elif "zhuanye" in cell:
+        #             del cell["zhuanye"]
+        #         if rows_list[j][3]:
+        #             cell["xingming"] = rows_list[j][3]
+        #         elif "xingming" in cell:
+        #             del cell["xingming"]
+        #         if rows_list[j][4]:
+        #             cell["zhiwu"] = rows_list[j][4]
+        #         elif "zhiwu" in cell:
+        #             del cell["zhiwu"]
+        #         if rows_list[j][5]:
+        #             cell["dianhua"] = rows_list[j][5]
+        #         elif "dianhua" in cell:
+        #             del cell["dianhua"]
+        #         if rows_list[j]:
+        #             cell["dizhi"] = rows_list[j][6]
+        #         elif "dizhi" in cell:
+        #             del cell["dizhi"]
+        #         if rows_list[j][7]:
+        #             cell["youxiang"] = rows_list[j][7]
+        #         elif "youxiang" in cell:
+        #             del cell["youxiang"]
         for i in tablelist:
             rows_list1 = excel.get_table_rows(i)
             rows_list.extend(rows_list1)
             for j in range(0, len(rows_list)):
-                if rows_list[j][0]:
-                    cell["yuan"] = rows_list[j][0]
-                elif "yuan" in cell:
-                    del cell["yuan"]
-                if rows_list[j][1]:
-                    cell["xi"] = rows_list[j][1]
-                elif "xi" in cell:
-                    del cell["xi"]
-                if rows_list[j][2]:
-                    cell["zhuanye"] = rows_list[j][2]
-                elif "zhuanye" in cell:
-                    del cell["zhuanye"]
-                if rows_list[j][3]:
-                    cell["xingming"] = rows_list[j][3]
-                elif "xingming" in cell:
-                    del cell["xingming"]
-                if rows_list[j][4]:
-                    cell["zhiwu"] = rows_list[j][4]
-                elif "zhiwu" in cell:
-                    del cell["zhiwu"]
-                if rows_list[j][5]:
-                    cell["dianhua"] = rows_list[j][5]
-                elif "dianhua" in cell:
-                    del cell["dianhua"]
-                if rows_list[j][6]:
-                    cell["dizhi"] = rows_list[j][6]
-                elif "dizhi" in cell:
-                    del cell["dizhi"]
-                if rows_list[j][7]:
-                    cell["youxiang"] = rows_list[j][7]
-                elif "youxiang" in cell:
-                    del cell["youxiang"]
+                num = len(rows_list[j])
+            if num > 0:
+                cell["yuan"] = rows_list[j][0]
+            elif "yuan" in cell:
+                del cell["yuan"]
+            if num > 1:
+                cell["xi"] = rows_list[j][1]
+            elif "xi" in cell:
+                del cell["xi"]
+            if num > 2:
+                cell["zhuanye"] = rows_list[j][2]
+            elif "zhuanye" in cell:
+                del cell["zhuanye"]
+            if num > 3:
+                cell["xingming"] = rows_list[j][3]
+            elif "xingming" in cell:
+                del cell["xingming"]
+            if num > 4:
+                cell["zhiwu"] = rows_list[j][4]
+            elif "zhiwu" in cell:
+                del cell["zhiwu"]
+            if num > 5:
+                cell["dianhua"] = rows_list[j][5]
+            elif "dianhua" in cell:
+                del cell["dianhua"]
+            if num > 6:
+                cell["dizhi"] = rows_list[j][6]
+            elif "dizhi" in cell:
+                del cell["dizhi"]
+            if num > 7:
+                cell["youxiang"] = rows_list[j][7]
+            elif "youxiang" in cell:
+                del cell["youxiang"]
                 try:
                     models.tongxunlu.objects.create(**cell)
                 except:
