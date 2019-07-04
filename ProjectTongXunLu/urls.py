@@ -28,4 +28,5 @@ urlpatterns = [
     path('fileupload/', views.fileupload, name="fileupload"),
     path('download/', views.download, name="download"),
     path('cdh/', views.cdh, name="cdh"),
+    path('glydl/', views.glydl, name="glydl"),
 ]

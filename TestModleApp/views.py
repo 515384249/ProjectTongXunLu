@@ -186,6 +186,9 @@ def mylogout(request):
 
 def mylogin(request):
     context = {}
+    return render(request, 'mylogin.html', context)
+def glydl(request):
+    context = {}
     if request.method == 'POST':
         print("post")
         username = request.POST.get('username')
@@ -200,9 +203,8 @@ def mylogin(request):
             return HttpResponse("<h1>密码错误</h1>")
     elif request.method == 'GET':
         yuan = models.yuan.objects.all().values('name')
-        context = {"case_name":yuan}
-        return render(request, 'mylogin.html', context)
-
+        context = {"case_name": yuan}
+    return render(request, 'guanliyuan.html', context)
 
 def kjfs_search(request):
     if request.method == 'POST':

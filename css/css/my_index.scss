@@ -1,0 +1,22 @@
+@import "init.scss";
+@import "constants.scss";
+
+
+.header{
+    width: 100%;
+    height: 132px;
+    background: #f2f2f2;
+    .container{
+        width: $PageWidth;
+        height: 100%;
+        background: #0c5460;
+        margin: 0 auto;
+    }
+
+$PageWidth:1170px;
+
+}
+.body{
+
+
+}

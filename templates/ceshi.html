@@ -9,14 +9,16 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background: url(/static/img/head_back.png)">
         <div class="container">
             <div class="navbar-header">
-                <img src="/static/img/footer_logo.png"  alt="" />
+                <img src="/static/img/footer_logo.png" alt=""/>
             </div>
 
             <div id="navbar" class="navbar-collapse collapse ">
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a> {{request.user}}</a></li>
+
+                    <li><a> {{ request.user }}</a></li>
                     <li><a href="{% url 'mylogout' %}">退出</a></li>
+
                 </ul>
 
             </div><!--/.navbar-collapse -->
@@ -24,9 +26,9 @@
     </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron" >
+    <div class="jumbotron">
         <div class="container container-fluid">
-    </div>
+        </div>
     </div>
     </div>
 
@@ -42,17 +44,17 @@
                         <button id="mybtn_add" type="button" class="btn btn-default">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                         </button>
-{#                        <button id="mybtn_edit" type="button" class="btn btn-default">#}
-{#                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改#}
-{#                        </button>#}
+                        {#                        <button id="mybtn_edit" type="button" class="btn btn-default">#}
+                        {#                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改#}
+                        {#                        </button>#}
                         <button id="mybtn_delete" type="button" class="btn btn-default">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                         </button>
 
 
-                       <button id="mybtn_save" type="button" class="btn btn-default">
+                        <button id="mybtn_save" type="button" class="btn btn-default">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>保存
-                      </button>
+                        </button>
 
 
                         <button id="mybtn_excel" type="file" class="btn btn-default" data-toggle="modal"
@@ -61,51 +63,52 @@
                         </button>
 
                     </div>
-    <!-- 模态框（Modal） -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <!-- 模态框（Modal） -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">
-                                            请下载模板文件，按照格式填写后上传文件
-                                        </h4>
-                                    </div>
-                                    <div class="modal-body container">
-                                        <div class="row">
-                                            <form enctype="multipart/form-data" action="/fileupload/" method="post" id = "motaiform">
-                                                {% csrf_token %}
-                                                <div class="col-md-3 row">
-                                                    <input type="file" name="myfile"/>
-                                                </div>
-                                                <div class="col-md">
-                                                    <button type="submit" class="btn btn-primary" id="mybtn_upload">
-                                                        提交
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md">
-                                            <a href="{% url 'download' %}">下载模板</a>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        请下载模板文件，按照格式填写后上传文件
+                                    </h4>
+                                </div>
+                                <div class="modal-body container">
+                                    <div class="row">
+                                        <form enctype="multipart/form-data" action="/fileupload/" method="post"
+                                              id="motaiform">
+                                            {% csrf_token %}
+                                            <div class="col-md-3 row">
+                                                <input type="file" name="myfile"/>
                                             </div>
+                                            <div class="col-md">
+                                                <button type="submit" class="btn btn-primary" id="mybtn_upload">
+                                                    提交
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <a href="{% url 'download' %}">下载模板</a>
                                         </div>
+                                    </div>
 
 
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                                        </button>
-                                        <button type="button" class="btn btn-primary">
-                                            提交更改
-                                        </button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal -->
-                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary">
+                                        提交更改
+                                    </button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
 
 
                     <table id="ArbetTable" class="display table  table-hover" data-toggle="table"
@@ -123,8 +126,6 @@
                            data-show-toggle="true"
                            data-page-size=20
                            data-striped="true"
-
-
 
 
                     >
