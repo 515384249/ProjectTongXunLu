@@ -1,6 +1,9 @@
 $('#myModal').draggable();
 
 
+ // document.getElementsByClassName('pagination').style.marginLeft= '0px'
+
+
 // //删除
 // $(document).ready(function () {
 //     $.ajaxSetup({

@@ -51,4 +51,18 @@ class yuan(models.Model):
     has_father = models.CharField(max_length=1, null=True)
     father_name = models.CharField(max_length=30, null=True)
     son_name = models.CharField(max_length=30, null=True)
+class people_infor(models.Model):
+    dwmc = models.CharField(max_length=30, null=True)
+    dwjc = models.CharField(max_length=30, null=True)
+    ksmc = models.CharField(max_length=30, null=True)
+    xingming = models.CharField(max_length=30, null=True)
+    dianhua = models.CharField(max_length=30, null=True)
+    dizhi = models.CharField(max_length=30, null=True)
+    dwh = models.IntegerField( null=True)
+class people_dwxx(models.Model):
+    dwjc = models.CharField(max_length=30, null=True)
+    dwmc = models.CharField(max_length=30, null=True)
+    dwh = models.IntegerField( null=True)
+
+
 

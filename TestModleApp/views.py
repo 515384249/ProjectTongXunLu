@@ -5,8 +5,6 @@ from . import models
 from django.contrib.auth import login, logout, authenticate
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, HttpResponse
-from django.contrib import messages
-from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET
 from django.db.models import Q
@@ -14,8 +12,6 @@ from django.http import FileResponse
 from tools import excel
 from django.conf import settings
 
-# from django.views.decorators.csrf import csrf_exempt
-# @csrf_exempt
 
 
 def download(request):
@@ -135,31 +131,47 @@ def showtable(request):
     if request.method == "GET":
         search = request.GET.get('search')  # how many items per page
         print("search index is %s"%search)
+        # if search:  # 判断是否有搜索字
+        #     all_records = models.tongxunlu.objects.filter(
+        #         Q(xingming__contains=search) | Q(yuan__contains=search) | Q(xi__contains=search) | Q(
+        #             zhuanye__contains=search) | Q(zhiwu__contains=search) | Q(dianhua__contains=search) | Q(
+        #             dizhi__contains=search)
+        #     ).values('id', 'yuan', 'xi', 'zhuanye', 'xingming', 'zhiwu', 'dianhua', 'dizhi').order_by('id')
+        # else:
+        #     all_records = models.tongxunlu.objects.all().values('id', 'yuan', 'xi', 'zhuanye', 'xingming', 'zhiwu',
+        #                                                         'dianhua',
+        #                                                         'dizhi')
         if search:  # 判断是否有搜索字
-            all_records = models.tongxunlu.objects.filter(
-                Q(xingming__contains=search) | Q(yuan__contains=search) | Q(xi__contains=search) | Q(
-                    zhuanye__contains=search) | Q(zhiwu__contains=search) | Q(dianhua__contains=search) | Q(
-                    dizhi__contains=search)
-            ).values('id', 'yuan', 'xi', 'zhuanye', 'xingming', 'zhiwu', 'dianhua', 'dizhi').order_by('id')
+            all_records = models.people_infor.objects.filter(
+                Q(xingming__contains=search) | Q(dwmc__contains=search) | Q(ksmc__contains=search)
+                 | Q(dianhua__contains=search) | Q(dizhi__contains=search)
+            ).values('id', 'dwmc', 'ksmc', 'xingming',  'dianhua', 'dizhi','dwh').order_by('dwh')
+
         else:
-            all_records = models.tongxunlu.objects.all().values('id', 'yuan', 'xi', 'zhuanye', 'xingming', 'zhiwu',
-                                                                'dianhua',
-                                                                'dizhi')
+            all_records = models.people_infor.objects.all().values('id', 'dwmc', 'ksmc', 'xingming',  'dianhua', 'dizhi').order_by('id')
         ppp = json.dumps(list(all_records))
         return HttpResponse(ppp)
     elif request.method == "POST":
         search = request.POST.get('search')  # how many items per page
         print("post search index is %s" % search)
+        # if search:  # 判断是否有搜索字
+        #     all_records = models.tongxunlu.objects.filter(
+        #         Q(xingming__contains=search) | Q(yuan__contains=search) | Q(xi__contains=search) | Q(
+        #             zhuanye__contains=search) | Q(zhiwu__contains=search) | Q(dianhua__contains=search) | Q(
+        #             dizhi__contains=search)
+        #     ).values('id', 'yuan', 'xi', 'zhuanye', 'xingming', 'zhiwu', 'dianhua', 'dizhi').order_by('id')
+        # else:
+        #     all_records = models.tongxunlu.objects.all().values('id', 'yuan', 'xi', 'zhuanye', 'xingming', 'zhiwu',
+        #                                                         'dianhua',
+        #                                                         'dizhi')
         if search:  # 判断是否有搜索字
-            all_records = models.tongxunlu.objects.filter(
-                Q(xingming__contains=search) | Q(yuan__contains=search) | Q(xi__contains=search) | Q(
-                    zhuanye__contains=search) | Q(zhiwu__contains=search) | Q(dianhua__contains=search) | Q(
-                    dizhi__contains=search)
-            ).values('id', 'yuan', 'xi', 'zhuanye', 'xingming', 'zhiwu', 'dianhua', 'dizhi').order_by('id')
+            all_records = models.people_infor.objects.filter(
+                Q(xingming__contains=search) | Q(dwmc__contains=search) | Q(ksmc__contains=search)
+                 | Q(dianhua__contains=search) | Q(dizhi__contains=search)
+            ).values('id', 'dwmc', 'ksmc', 'xingming',  'dianhua', 'dizhi','dwh').order_by('dwh')
+
         else:
-            all_records = models.tongxunlu.objects.all().values('id', 'yuan', 'xi', 'zhuanye', 'xingming', 'zhiwu',
-                                                                'dianhua',
-                                                                'dizhi')
+            all_records = models.people_infor.objects.all().values('id', 'dwmc', 'ksmc', 'xingming',  'dianhua', 'dizhi').order_by('id')
         ppp = json.dumps(list(all_records))
         print(ppp)
         return HttpResponse(ppp)
@@ -206,24 +218,6 @@ def glydl(request):
         context = {"case_name": yuan}
     return render(request, 'guanliyuan.html', context)
 
-def kjfs_search(request):
-    if request.method == 'POST':
-        print("收到post")
-        type = request.POST.get('type')  # 测试是否能够接收到前端发来的name字段
-        print(type)
-        a = request.POST.get('data')  # 测试是否能够接收到前端发来的name字段
-        b = a.strip(" ")
-        if (type == "kjjs"):
-            data = models.tongxunlu.objects.filter(yuan__contains=b).values('id', 'yuan', 'xi', 'zhuanye', 'xingming',
-                                                                            'zhiwu',
-                                                                            'dianhua', 'dizhi')
-
-            json_data = json.dumps(list(data))
-
-            return HttpResponse(json_data)
-    else:
-        return HttpResponse("<h1>test</h1>")
-
 
 def kjfs_edit(request):
     if request.method == 'POST':
@@ -263,36 +257,3 @@ def kjfs_edit(request):
     else:
         return HttpResponse("<h1>test</h1>")
 
-
-def cdh(request):
-    context = {}
-    if request.method == 'GET':
-        case_name = request.GET.get('name')
-        case_page = request.GET.get('page')
-    elif request.method == 'POST':
-        case_name = request.POST.get('name')
-        case_page = request.POST.get('page')
-    if case_name:
-        contact_list = models.tongxunlu.objects.filter(
-            Q(xingming__contains=case_name) | Q(yuan__contains=case_name) | Q(xi__contains=case_name) | Q(
-                zhuanye__contains=case_name) | Q(zhiwu__contains=case_name) | Q(dianhua__contains=case_name) | Q(
-                dizhi__contains=case_name)
-        ).values('yuan', 'xi', 'zhuanye', 'xingming', 'zhiwu', 'dianhua', 'dizhi').order_by('id')
-    else:
-        contact_list = models.tongxunlu.objects.all().values('yuan', 'xi', 'zhuanye', 'xingming', 'zhiwu', 'dianhua',
-                                                             'dizhi').order_by('id')
-
-    paginator = Paginator(contact_list, 2200)  # 每页显示25条
-    yuanxi = models.yuan.objects.all().values('name', 'father_name')
-    try:
-        contacts = paginator.page(case_page)
-    except PageNotAnInteger:
-        # 如果请求的页数不是整数，返回第一页。
-        contacts = paginator.page(1)
-    except EmptyPage:
-        contacts = paginator.page(1)
-    context = {'contacts': contacts,
-               'case_name': yuanxi,
-               'search_name': case_name,
-               }
-    return render(request, 'mylogin.html', context)

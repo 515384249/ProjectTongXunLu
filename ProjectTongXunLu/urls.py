@@ -21,12 +21,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('mylogin/', views.mylogin, name="mylogin"),
     path('mylogout', views.mylogout,name ="mylogout"),
-    path('kjfs_search/', views.kjfs_search, name="kjfs_search"),
     path('ceshi/', views.ceshi, name="ceshi"),
     path('showtable/', views.showtable, name="showtable"),
     path('kjfs_edit/', views.kjfs_edit, name="kjfs_edit"),
     path('fileupload/', views.fileupload, name="fileupload"),
     path('download/', views.download, name="download"),
-    path('cdh/', views.cdh, name="cdh"),
+
+
     path('glydl/', views.glydl, name="glydl"),
 ]

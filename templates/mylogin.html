@@ -6,41 +6,20 @@
 
 {% block body %}
 
-    <nav class="navbar navbar-inverse navbar-fixed-top"
-         style="background: url(/static/img/head_back.png) ;position: relative;margin-bottom: 0px">
-        <div class="container">
-
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                        aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class=" container">
-                    <div class="row ">
-                        <div class="col-md-4" >
-                            <img src="/static/img/footer_logo.png" alt=""/>
-                        </div>
-                                   <div id="navbar" class="navbar-collapse collapse ">
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{% url 'glydl' %}">管理员登录</a></li>
-                </ul>
-
-            </div><!--/.navbar-collapse -->
-
-
-
-                        <div class=" col-md-3" >
-                            <h3 style="color: #FFFFFF">电话号码查询</h3>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background: url(/static/img/head_back.png) ;position: relative;margin-bottom: 0px">
+        <div class="container" style="margin: 0 auto;miax-width:1025px ">
+        <div class="navbar-header" style="margin-top: 20px;margin-bottom: 20px">
+            <img src="/static/img/xiaohui.png"  style="width: 105px;height: 100px" alt=""/>
+            <img src="/static/img/xiaoming.png"  style="width: 300px;height: 100px" alt=""/>
         </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'glydl' %}" style="margin-left: -100px">管理员登录</a></li>
+            </ul>
+        </div>
+
+</div>
+
     </nav>
 
     {#    <!-- Main jumbotron for a primary marketing message or call to action -->#}
@@ -62,9 +41,11 @@
 
         <div class="container">
             <!-- Example row of columns -->
+  <div  class="center-block text-center" style="background-image: url(/static/img/bg_02.png);height: 60px;width:100%;">
+      <h2  class="center-block container" style="margin-top: 3px;padding-top: 15px">电话查询</h2></div>
             <!-- 第一列放表格 -->
             <div class="row">
-                <div class="col-md-10 " id="diyilie">
+                <div class="col-md-12 center-block " id="diyilie">
                     <div>
                         <div id="toolbar" class="btn-group">
 
@@ -92,10 +73,11 @@
                         >
                             <thead>
                             <tr>
-                                <th data-field="yuan" data-align="center" data-sortable="true">院</th>
+                                <th data-field="dwmc" data-align="center" data-sortable="true">单位</th>
+                                <th data-field="ksmc" data-align="center" data-sortable="true">科室</th>
 
                                 <th data-field="xingming" data-align="center" data-sortable="true"
-                                >姓名
+                                >姓名/岗位
                                 </th>
                                 <th data-field="dianhua" data-align="center" data-sortable="true">电话</th>
                                 <th data-field="dizhi" data-align="center" data-sortable="true">办公地址</th>

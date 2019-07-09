@@ -426,6 +426,10 @@ $(document).ready(function () {
 //     return rows
 // }
 
-
-
-document.getElementsByClassName('pagination').style.marginLeft='0px'
+$(document).ready(function () {
+    var inn = document.getElementsByClassName("pagination");
+var i=0;
+for (i=0;i<inn.length;i++) {
+    inn[i].style.margin=0;
+}
+});
